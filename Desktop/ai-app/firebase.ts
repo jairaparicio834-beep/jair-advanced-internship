@@ -7,12 +7,12 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyD2dxHV1B6loV1NePeXcka07Qn4_6a2VL8",
-  authDomain: "hollywood-ai-a1607.firebaseapp.com",
-  projectId: "hollywood-ai-a1607",
-  storageBucket: "hollywood-ai-a1607.firebasestorage.app",
-  messagingSenderId: "200963068423",
-  appId: "1:200963068423:web:34c02bf6f3fdc3a8e2d0a2"
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_API_ID
 };
 
 // Initialize Firebase
