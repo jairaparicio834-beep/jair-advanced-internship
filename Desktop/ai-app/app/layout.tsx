@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import StoreProvider from "@/components/StoreProvider";
-
+import AuthModal from "@/components/modals/AuthModal";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -21,7 +21,9 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
       </head>
       <StoreProvider>
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <AuthModal />
+          {children}</body>
       </StoreProvider>
     </html>
   );

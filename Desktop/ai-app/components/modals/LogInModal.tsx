@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FcGoogle } from 'react-icons/fc'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons'
@@ -9,9 +9,11 @@ import { Modal } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { auth, provider } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { ModalType } from '@/types/modal'
+
+import { signInUser } from '@/store/slices/userSlice';
 interface LogInModalProps {
     setModal: (value: ModalType) => void
 }
@@ -25,15 +27,19 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
     const [email, setEmail] = useState('')
     const dispatch = useDispatch()
     const isOpen = useSelector((state: RootState) => state.modal.isOpen)
+
     const handleGoogleSignIn = async () => {
         setLoadingGoogle(true)
         const result = await signInWithPopup(auth, provider)
         const user = result.user
         if (user) {
+            dispatch(signInUser({ email: user.email, password }))
             router.push('/dashboard')
         }
         setLoadingGoogle(false)
+        dispatch(closeModal())
     }
+
     const handleLogIn = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         try {
             e.preventDefault()
@@ -42,9 +48,11 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
             const userCredentials = await signInWithEmailAndPassword(auth, email, password)
             const user = userCredentials.user
             if (user) {
+                dispatch(signInUser({ email: userCredentials.user.email, password }))
                 router.push('/dashboard')
             }
             setLoading(false)
+            dispatch(closeModal())
         } catch (error: any) {
             switch (error.code) {
                 case 'auth/invalid-email':
@@ -72,13 +80,27 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
             const userCredentials = await signInWithEmailAndPassword(auth, 'guest123@gmail.com', '12345678')
             const user = userCredentials.user
             if (user) {
+                dispatch(signInUser({ email: user.email, password }))
                 router.push('/dashboard')
             }
             setLoadingGuest(false)
+            dispatch(closeModal())
         } catch (error) {
             console.error(error)
         }
     }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            if (!currentUser) return
+
+            dispatch(signInUser({
+                email: currentUser.email
+            }))
+            router.push('/dashboard')
+        })
+        return unsubscribe
+    }, [])
     return (
         <>
 

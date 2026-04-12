@@ -11,6 +11,7 @@ import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalType } from '@/types/modal'
+import { signInUser } from '@/store/slices/userSlice';
 interface SignUpModalProps {
     setModal: (value: ModalType) => void
 }
@@ -31,9 +32,11 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
         const user = result.user
 
         if (user) {
+            dispatch(signInUser({ email: user.email, password }))
             router.push('/dashboard')
         }
         setLoadingGoogle(false)
+        dispatch(closeModal())
 
     }
     const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -44,9 +47,11 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
             const user = userCredentials.user
             if (user) {
+                dispatch(signInUser({ email: user.email, password }))
                 router.push('/dashboard')
             }
             setLoading(false)
+            dispatch(closeModal())
         } catch (error: any) {
             switch (error.code) {
                 case 'auth/invalid-email':
@@ -72,9 +77,11 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
         const userCredentials = await createUserWithEmailAndPassword(auth, 'guest012@gmail.com', '12345678')
         const user = userCredentials.user
         if (user) {
+            dispatch(signInUser({ email: user.email, password }))
             router.push('/dashboard')
         }
         setLoadingGuest(false)
+        dispatch(closeModal())
     }
     return (
         <>

@@ -1,5 +1,5 @@
-import AuthModal from "@/components/modals/AuthModal";
-// import './/landing.css'
+import NavSignInButton from "@/components/NavSignInButton";
+
 export default function Home() {
   return (
     <>
@@ -14,7 +14,7 @@ export default function Home() {
           <a href="#" className="text-[14px] py-[7px] px-[14px] text-[#070707] font-semibold rounded-lg transition-all duration-300 hover:bg-black/5 cursor-not-allowed">How it works</a>
           <a href="#" className="text-[14px] py-[7px] px-[14px] text-[#070707] font-semibold rounded-lg transition-all duration-300 hover:bg-black/5 cursor-not-allowed">Privacy policy</a>
         </div>
-        <AuthModal />
+        <NavSignInButton />
       </nav >
 
       {/* Hero */}
