@@ -8,7 +8,6 @@ import React from 'react';
 
 const Favorites = () => {
     const { isLoggedIn, isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
-    console.log(isSubscribed)
     if (isLoading) return <FavoritesSkeleton />
     return (
         <div className='flex flex-col py-[40px] items-start'>

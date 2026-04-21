@@ -5,7 +5,7 @@ import { store } from '@/store';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '@/firebase';
 import { changeSubscriptionStatus, signInUser, setLoading, signOutUser, userSubscribed } from '@/store/slices/userSlice';
-import { doc, getDoc, onSnapshot } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 
 interface StoreProviderProps {
     children: React.ReactNode

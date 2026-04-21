@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const fetchMovie = async (id: string) => {
     const { data } = await axios.get(`https://advanced-internship-api-production.up.railway.app/movies/${id}`)
-    console.log(data.data)
     return data.data
 }
 fetchMovie('3264d6f6-94b5-4175-972d-bf24fc828e76')

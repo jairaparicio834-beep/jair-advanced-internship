@@ -5,7 +5,7 @@ import { adminDb } from '@/app/firebase/firebaseAdmin'
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function POST(req: Request) {
-     console.log('🔥 Webhook hit!')
+    
   const body = await req.text()
   const sig = req.headers.get('stripe-signature')!
 
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
       process.env.STRIPE_WEBHOOK_SECRET!
     )
   } catch (err: any) {
-    console.error('Webhook signature failed:', err.message)
+   
     return NextResponse.json({ error: err.message }, { status: 400 })
   }
 
@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     let uid: string | undefined
     let plan: string | undefined
 
-    console.log('🔔 Event type:', event.type)
+  
 
     if (event.type === 'checkout.session.completed') {
         const session = event.data.object as Stripe.Checkout.Session

@@ -3,9 +3,9 @@ import SideBar from "@/components/SideBar";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
     return (
-        <div className="flex min-h-screen w-full">
+        <div className="flex min-h-screen w-full overflow-hidden">
             <SideBar />
-            <div className="flex-1 flex flex-col md:ml-[240px]">
+            <div className="flex-1 flex flex-col md:ml-[240px] min-w-0 overflow-hidden">
                 <div className="w-full flex items-center relative gap-4">
                     <SearchBar />
                 </div>
@@ -13,6 +13,6 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                     {children}
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

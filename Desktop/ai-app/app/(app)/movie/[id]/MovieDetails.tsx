@@ -32,7 +32,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     const router = useRouter()
     const { isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
     const dispatch = useDispatch()
-    console.log(isSubscribed)
+ 
     function sendUserToNewRoute() {
         if (!isSubscribed && movie.subscriptionRequired) {
             router.push('/plans')
@@ -49,7 +49,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
             dispatch(removeFromFavorites(movie))
         }
     }
-    console.log(favoriteMovies)
+   
     if (isLoading) return <MovieDetailSkeleton />
     return (
         <>

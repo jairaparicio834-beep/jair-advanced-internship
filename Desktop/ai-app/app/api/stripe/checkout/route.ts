@@ -6,7 +6,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 export async function POST(req: Request) {
   try {
    const { priceId, uid, plan } = await req.json()
-  console.log('Checkout hit:', { priceId, uid, plan })
+  
 
  const session = await stripe.checkout.sessions.create({
     payment_method_types: ['card'],
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
     cancel_url: `${process.env.NEXT_PUBLIC_URL}/plans`,
 })
 
-  console.log('Success URL:', session.success_url)
+ 
   return NextResponse.json({ url: session.url })
   } catch (err: any) {
     console.error('FULL STRIPE ERROR:', err)

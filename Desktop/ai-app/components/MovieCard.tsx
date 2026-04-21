@@ -11,7 +11,7 @@ const MovieCard = ({ id, director, title, subscriptionRequired, imageLink, audio
     const { isLoggedIn, subscriptionStatus } = useAuth()
     const showPremiumBadge = !isLoggedIn || (subscriptionStatus === 'Basic' && subscriptionRequired)
     return (
-        <div className='w-full max-w-[170px] pt-2.5 relative'>
+        <div className='w-full pt-2.5 relative'>
             {(subscriptionRequired && subscriptionStatus == 'Basic') && (
                 <div className='absolute top-0 z-50 left-1/2 -translate-x-1/2 bg-opacity-80 bg-[#5b1994] transition hover:bg-opacity-100 text-white text-[10px] font-bold px-2 py-1 rounded-full'>
                     Premium
