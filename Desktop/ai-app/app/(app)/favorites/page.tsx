@@ -1,10 +1,9 @@
 import React from 'react';
+import Favorites from './Favorites';
 
 const Pages = () => {
     return (
-        <div>
-            <h1>Movie/Id</h1>
-        </div>
+        <Favorites />
     );
 }
 

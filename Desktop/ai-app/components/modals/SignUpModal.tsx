@@ -1,17 +1,18 @@
 'use client'
-import { auth, provider } from '@/firebase';
+import { auth, db, provider } from '@/firebase';
 import { RootState } from '@/store';
 import { closeModal } from '@/store/slices/modalSlice';
 import { faTimes, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from '@mui/material';
-import { createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalType } from '@/types/modal'
 import { signInUser } from '@/store/slices/userSlice';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 interface SignUpModalProps {
     setModal: (value: ModalType) => void
 }
@@ -32,7 +33,16 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
         const user = result.user
 
         if (user) {
-            dispatch(signInUser({ email: user.email, password }))
+            const docRef = doc(db, 'users', user.uid)
+            const docSnap = await getDoc(docRef)
+            if (!docSnap.exists()) {
+                await setDoc(docRef, {
+                    email: user.email,
+                    subscriptionStatus: 'Basic',
+                    isSubscribed: false,
+                })
+            }
+            dispatch(signInUser({ email: user.email ?? '', password }))
             router.push('/dashboard')
         }
         setLoadingGoogle(false)
@@ -47,7 +57,12 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
             const user = userCredentials.user
             if (user) {
-                dispatch(signInUser({ email: user.email, password }))
+                await setDoc(doc(db, 'users', user.uid), {
+                    email: user.email,
+                    subscriptionStatus: 'Basic',
+                    isSubscribed: false,
+                })
+                dispatch(signInUser({ email: user.email ?? '', password }))
                 router.push('/dashboard')
             }
             setLoading(false)
@@ -74,10 +89,10 @@ const SignUpModal = ({ setModal }: SignUpModalProps) => {
     }
     const handleGuestSignUp = async () => {
         setLoadingGuest(true)
-        const userCredentials = await createUserWithEmailAndPassword(auth, 'guest012@gmail.com', '12345678')
+        const userCredentials = await signInWithEmailAndPassword(auth, 'guest123@gmail.com', '12345678')
         const user = userCredentials.user
         if (user) {
-            dispatch(signInUser({ email: user.email, password }))
+            dispatch(signInUser({ email: user.email ?? '', password }))
             router.push('/dashboard')
         }
         setLoadingGuest(false)

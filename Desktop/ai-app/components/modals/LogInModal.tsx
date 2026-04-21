@@ -7,13 +7,15 @@ import { RootState } from '@/store';
 import { closeModal } from '@/store/slices/modalSlice';
 import { Modal } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { auth, provider } from '@/firebase';
+import { auth, db, provider } from '@/firebase';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged, signInWithPopup } from 'firebase/auth';
+import { signInWithPopup } from 'firebase/auth';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { ModalType } from '@/types/modal'
 
-import { signInUser } from '@/store/slices/userSlice';
+
+import { changeSubscriptionStatus, signInUser } from '@/store/slices/userSlice';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 interface LogInModalProps {
     setModal: (value: ModalType) => void
 }
@@ -33,9 +35,23 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
         const result = await signInWithPopup(auth, provider)
         const user = result.user
         if (user) {
-            dispatch(signInUser({ email: user.email, password }))
-            router.push('/dashboard')
+            const docRef = doc(db, 'users', user.uid)
+            const docSnap = await getDoc(docRef)
+            if (!docSnap.exists()) {
+                await setDoc(docRef, {
+                    email: user.email,
+                    subscriptionStatus: 'Basic',
+                    isSubscribed: false,
+                })
+            }
+            dispatch(signInUser({ email: user.email ?? '', password }))
+            dispatch(changeSubscriptionStatus('Basic'))
         }
+        if (isOpen) {
+            router.push('/dashboard')
+            dispatch(closeModal())
+        }
+
         setLoadingGoogle(false)
         dispatch(closeModal())
     }
@@ -44,11 +60,20 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
         try {
             e.preventDefault()
             setLoading(true)
-            setError('')
             const userCredentials = await signInWithEmailAndPassword(auth, email, password)
             const user = userCredentials.user
             if (user) {
-                dispatch(signInUser({ email: userCredentials.user.email, password }))
+                const docRef = doc(db, 'users', user.uid)
+                const docSnap = await getDoc(docRef)
+                if (!docSnap.exists()) {
+                    await setDoc(docRef, {
+                        email: user.email,
+                        subscriptionStatus: 'Basic',
+                        isSubscribed: false,
+                    })
+                }
+                dispatch(signInUser({ email: userCredentials.user.email ?? '', password }))
+                dispatch(changeSubscriptionStatus('Basic'))
                 router.push('/dashboard')
             }
             setLoading(false)
@@ -80,8 +105,9 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
             const userCredentials = await signInWithEmailAndPassword(auth, 'guest123@gmail.com', '12345678')
             const user = userCredentials.user
             if (user) {
-                dispatch(signInUser({ email: user.email, password }))
+                dispatch(signInUser({ email: user.email ?? '', password }))
                 router.push('/dashboard')
+
             }
             setLoadingGuest(false)
             dispatch(closeModal())
@@ -90,17 +116,6 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
         }
     }
 
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (!currentUser) return
-
-            dispatch(signInUser({
-                email: currentUser.email
-            }))
-            router.push('/dashboard')
-        })
-        return unsubscribe
-    }, [])
     return (
         <>
 

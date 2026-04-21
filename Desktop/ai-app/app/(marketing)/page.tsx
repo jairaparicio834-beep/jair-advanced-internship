@@ -46,8 +46,8 @@ export default function Home() {
             All-in-one platform to watch your favourite movies in minutes using AI.
           </p>
           <a className="py-3 px-4 font-semibold bg-black/10 flex justify-center items-center text-[17px] leading-5 gap-4 rounded-[48px] h-16 cursor-pointer transition-all duration-300 hover:bg-black/20">
-            <div className="w-10 h-10 p-3 rounded-full bg-white text-[rgb(55,57,61)] text-[10px] flex justify-center items-center">
-              <i className="fa-solid fa-play w-4 h-4 text-[12px] flex justify-center items-center"></i>
+            <div className="w-10 h-10 p-3 rounded-full bg-white text-[rgb(55,57,61)] flex justify-center items-center">
+              <i className="fa-solid fa-play text-[12px]"></i>
             </div>
             <span className="text-white">See how it works &nbsp;</span>
           </a>

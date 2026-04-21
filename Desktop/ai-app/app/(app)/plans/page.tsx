@@ -1,10 +1,10 @@
 import React from 'react';
+import PlansContent from './PlansContent';
 
 const Page = () => {
-    return (
-        <div>
 
-        </div>
+    return (
+        <PlansContent />
     );
 }
 
