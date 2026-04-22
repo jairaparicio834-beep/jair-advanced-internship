@@ -75,6 +75,8 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
                 dispatch(signInUser({ email: userCredentials.user.email ?? '', password }))
                 dispatch(changeSubscriptionStatus('Basic'))
                 router.push('/dashboard')
+                setEmail('')
+                setPassword('')
             }
             setLoading(false)
             dispatch(closeModal())
