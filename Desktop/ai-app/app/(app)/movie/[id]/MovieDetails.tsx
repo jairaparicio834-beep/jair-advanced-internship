@@ -32,7 +32,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     const router = useRouter()
     const { isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
     const dispatch = useDispatch()
- 
+
     function sendUserToNewRoute() {
         if (!isSubscribed && movie.subscriptionRequired) {
             router.push('/plans')
@@ -49,11 +49,11 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
             dispatch(removeFromFavorites(movie))
         }
     }
-   
+
     if (isLoading) return <MovieDetailSkeleton />
     return (
         <>
-            <div className='flex flex-col-reverse xl:flex-row items-start py-4'>
+            <div className='flex flex-col-reverse xl:flex-row mx-auto max-w-[1400px] items-start py-4'>
                 <div className='flex flex-col w-full'>
                     <h1 className='text-[36px] mb-1 font-semibold'>{movie?.title}</h1>
                     <span className='mb-2 font-normal text-[rgba(64,70,84,.7)]'>{movie?.director}</span>

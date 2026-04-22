@@ -7,12 +7,12 @@ import { useAuth } from '@/hooks/useAuth';
 
 
 const Settings = () => {
-    const { isLoggedIn, isSubscribed, subscriptionStatus, isLoading, requireLogin, email } = useAuth()
+    const { isLoggedIn, subscriptionStatus, isLoading, requireLogin, email } = useAuth()
 
 
     return (
         <>
-            <div className='flex flex-col py-[40px]'>
+            <div className='flex flex-col py-[40px] max-w-[1400px] mx-auto'>
                 <h1 className='text-[32px] font-bold pb-4 mb-8 w-full border-b border-[#e1e7ea]'>Settings</h1>
                 {
                     isLoading ? <SettingsSkeleton /> :

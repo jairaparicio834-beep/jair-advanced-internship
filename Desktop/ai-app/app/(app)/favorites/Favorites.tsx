@@ -10,7 +10,7 @@ const Favorites = () => {
     const { isLoggedIn, isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
     if (isLoading) return <FavoritesSkeleton />
     return (
-        <div className='flex flex-col py-[40px] items-start'>
+        <div className='flex flex-col py-[40px] mx-auto max-w-[1400px] items-start'>
             <h1 className='text-[24px] font-bold mb-2 '>Saved Movies </h1>
             <h2 className='w-full text-[18px] font-light pb-4 mb-8 text-[rgba(64,70,84,.7)] border-b-2 border-[#f1f3f4]'>{isLoggedIn && isSubscribed ? favoriteMovies.length : 0} Movie(s)</h2>
             <div className='flex w-full justify-start flex-wrap gap-8'>
@@ -25,7 +25,9 @@ const Favorites = () => {
                     :
                     (favoriteMovies.length > 0 && isSubscribed) ?
                         favoriteMovies.map(movie => (
-                            <MovieCard {...movie} />
+                            <div className='max-w-[170px] w-full'>
+                                <MovieCard {...movie} />
+                            </div>
                         ))
                         :
                         <div className='max-w-fit bg-[#f1f6f4] flex flex-col items-center gap-2 p-8 rounded-xl text-center mx-auto mb-14'>

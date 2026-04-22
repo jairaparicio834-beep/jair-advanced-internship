@@ -11,7 +11,7 @@ const SearchBar = () => {
     const [input, setInput] = useState('')
     const [movies, setMovies] = useState<Movie[]>([])
     const [showDropdown, setShowDropdown] = useState(false)
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         if (!input) {
             setShowDropdown(false)
@@ -53,9 +53,16 @@ const SearchBar = () => {
                             </div>
 
                             {
-                                loading ? movies.map(movie => (
-                                    <SearchCardSkeleton key={movie.id} />
-                                )) :
+                                loading ?
+                                    <>
+                                        <SearchCardSkeleton />
+                                        <SearchCardSkeleton />
+                                        <SearchCardSkeleton />
+                                        <SearchCardSkeleton />
+                                        <SearchCardSkeleton />
+                                        <SearchCardSkeleton />
+                                    </>
+                                    :
                                     (movies.length > 0) ?
                                         movies.map(movie => (
                                             <MovieSearchCard key={movie.id} {...movie} onClose={() => {
@@ -71,7 +78,7 @@ const SearchBar = () => {
                         </div>
                     }
                 </div>
-            </div>
+            </div >
         </>
     );
 }
