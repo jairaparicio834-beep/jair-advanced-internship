@@ -1,4 +1,7 @@
 # Hollywood AI Movie Summary Application
+
+<img width="1408" height="688" alt="Screenshot 2026-04-24 at 9 44 11 PM" src="https://github.com/user-attachments/assets/7e958a3c-dfe3-4939-87cf-1430268baf49" />
+
 Developed and deployed a user-friendly platform for AI-powered film summaries, acheiving a 95% satisfation rate based on feedback on accuracy and 
 readability, using Next.js, Typescript, and Firebase.
 
