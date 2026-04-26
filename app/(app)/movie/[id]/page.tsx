@@ -8,7 +8,6 @@ const fetchMovie = async (id: string) => {
     const { data } = await axios.get(`https://advanced-internship-api-production.up.railway.app/movies/${id}`)
     return data.data
 }
-fetchMovie('3264d6f6-94b5-4175-972d-bf24fc828e76')
 interface PageProps {
     params: {
         id: string
@@ -17,6 +16,7 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
     const { id } = params
     const movie = await fetchMovie(id)
+    console.log(movie)
 
     return (
         <MovieDetails movie={movie} />

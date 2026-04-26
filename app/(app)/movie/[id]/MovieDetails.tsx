@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { addToFavorites, removeFromFavorites } from '@/store/slices/userSlice';
 import { MovieDetailSkeleton } from '@/components/skeletons/Skeletons';
 import { useAuth } from '@/hooks/useAuth';
+import { useRef, useState } from 'react';
 
 interface MovieDetailsProps {
     movie: {
@@ -32,11 +33,20 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     const router = useRouter()
     const { isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
     const dispatch = useDispatch()
+    const audioRef = useRef<HTMLAudioElement>(null)
+    const [duration, setDuration] = useState<string>('N/A')
 
+    function handleLoadedMetadata() {
+        const audio = audioRef.current
+        if (audio) {
+            const minutes = Math.floor(audio.duration / 60)
+            const seconds = Math.floor(audio.duration % 60)
+            setDuration(`${minutes}:${seconds.toString().padStart(2, '0')}`)
+        }
+    }
     function sendUserToNewRoute() {
         if (!isSubscribed && movie.subscriptionRequired) {
             router.push('/plans')
-
         } else {
             router.push(`/player/${movie.id}`)
         }
@@ -53,6 +63,13 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     if (isLoading) return <MovieDetailSkeleton />
     return (
         <>
+            <audio
+                ref={audioRef}
+                src={`https://advanced-internship-api-production.up.railway.app/${movie.audioLink}`}
+                onLoadedMetadata={handleLoadedMetadata}
+                onError={(e) => console.log('Audio error:', e)}
+                preload="metadata"
+            />
             <div className='flex flex-col-reverse xl:flex-row mx-auto max-w-[1400px] items-start py-4'>
                 <div className='flex flex-col w-full'>
                     <h1 className='text-[36px] mb-1 font-semibold'>{movie?.title}</h1>
@@ -66,7 +83,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
                             </div>
                             <div className='flex items-center w-1/2 font-normal text-[14px] gap-1.5'>
                                 <ClockIcon className='w-4 h-4' />
-                                <span>10:00</span>
+                                <span>{duration || '...'}</span>
                             </div>
                             <div className='flex items-center w-1/2 font-normal text-[14px] gap-1.5'>
                                 <MicrophoneIcon className='w-4 h-4' />
@@ -79,7 +96,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
                         </div>
                     </div>
                     <button
-                        onClick={() => requireLogin() && sendUserToNewRoute()}
+                        onClick={() => { (requireLogin()) && sendUserToNewRoute() }}
                         className='flex items-center justify-center cursor-pointer gap-2 w-[280px] h-[48px] bg-[#320580] text-[#fff] text-[16px] rounded border-none mb-6 transition '>
                         Summarise
                         <BoltIcon className='w-4 font-extrabold' />

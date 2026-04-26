@@ -7,7 +7,10 @@ const MovieCardSkeleton = () => {
             <div className='flex flex-col mt-2 space-y-2'>
                 <div className='bg-gray-200 animate-pulse rounded h-[14px] w-3/4' />
                 <div className='bg-gray-200 animate-pulse rounded h-[12px] w-1/2' />
-                <div className='bg-gray-200 animate-pulse rounded h-[12px] w-8' />
+                <div className='flex space-x-2'>
+                    <div className='bg-gray-200 animate-pulse rounded h-[12px] w-8' />
+                    <div className='bg-gray-200 animate-pulse rounded h-[12px] w-8' />
+                </div>
             </div>
         </div>
     );

@@ -1,7 +1,7 @@
 'use client'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SearchCardSkeleton from './skeletons/SearchCardSkeleton';
 import Link from 'next/link';
 import { Movie } from '@/types/movie';
@@ -12,6 +12,7 @@ const SearchBar = () => {
     const [movies, setMovies] = useState<Movie[]>([])
     const [showDropdown, setShowDropdown] = useState(false)
     const [loading, setLoading] = useState(false)
+
     useEffect(() => {
         if (!input) {
             setShowDropdown(false)
@@ -87,14 +88,34 @@ export default SearchBar;
 
 
 
-function MovieSearchCard({ imageLink, id, title, director, onClose }: Movie & { onClose: () => void }) {
+function MovieSearchCard({ imageLink, id, title, director, audioLink, onClose }: Movie & { onClose: () => void }) {
+    const audioRef = useRef<HTMLAudioElement>(null)
+    const [duration, setDuration] = useState<string>('N/A')
+    function handleLoadedMetadata() {
+        const audio = audioRef.current
+        if (audio) {
+            const minutes = Math.floor(audio.duration / 60)
+            const seconds = Math.floor(audio.duration % 60)
+            setDuration(`${minutes}:${seconds.toString().padStart(2, '0')}`)
+        }
+    }
     return (
-        <Link href={`/movie/${id}`} onClick={onClose} className='flex items-center p-6 space-x-6 h-[120px] text-[#000] border border-[#e1e7ea] hover:bg-[#f1f3f4] transition' >
-            <img src={imageLink} width={59} height={88} alt='Image' className='w-auto h-[80px] min-h-[88px] rounded-[4px]' />
-            <div className='flex flex-col space-y-1'>
-                <span className='text-[16px] font-medium'>{title}</span>
-                <span className='text-[14px] font-extralight text-[#6b757b]'>{director}</span>
-            </div>
-        </Link>
+        <>
+            <audio
+                ref={audioRef}
+                src={`https://advanced-internship-api-production.up.railway.app/${audioLink}`}
+                onLoadedMetadata={handleLoadedMetadata}
+                onError={(e) => console.log('Audio error:', e)}
+                preload="metadata"
+            />
+            <Link href={`/movie/${id}`} onClick={onClose} className='flex items-center p-6 space-x-6 h-[120px] text-[#000] border border-[#e1e7ea] hover:bg-[#f1f3f4] transition' >
+                <img src={imageLink} width={59} height={88} alt='Image' className='w-auto h-[80px] min-h-[88px] rounded-[4px]' />
+                <div className='flex flex-col space-y-1'>
+                    <span className='text-[16px] font-medium'>{title}</span>
+                    <span className='text-[14px] font-extralight text-[#6b757b]'>{director}</span>
+                    <span className='text-[14px] font-extralight text-[#6b757b]'>{duration || '...'}</span>
+                </div>
+            </Link>
+        </>
     )
 }
