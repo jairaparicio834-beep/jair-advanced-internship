@@ -10,6 +10,7 @@ import { addToFavorites, removeFromFavorites } from '@/store/slices/userSlice';
 import { MovieDetailSkeleton } from '@/components/skeletons/Skeletons';
 import { useAuth } from '@/hooks/useAuth';
 import { useRef, useState } from 'react';
+import { openModal } from '@/store/slices/modalSlice';
 
 interface MovieDetailsProps {
     movie: {
@@ -96,7 +97,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
                         </div>
                     </div>
                     <button
-                        onClick={() => { (requireLogin()) && sendUserToNewRoute() }}
+                        onClick={() => { (requireLogin()) ? sendUserToNewRoute() : dispatch(openModal()) }}
                         className='flex items-center justify-center cursor-pointer gap-2 w-[280px] h-[48px] bg-[#320580] text-[#fff] text-[16px] rounded border-none mb-6 transition '>
                         Summarise
                         <BoltIcon className='w-4 font-extrabold' />
