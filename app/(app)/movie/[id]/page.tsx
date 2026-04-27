@@ -15,8 +15,9 @@ interface PageProps {
 }
 const Page = async ({ params }: PageProps) => {
     const { id } = await params
+    console.log('MOVIE ID:', id)
     const movie = await fetchMovie(id)
-
+    console.log('MOVIE DATA:', movie)
 
     return (
         <MovieDetails movie={movie} />
