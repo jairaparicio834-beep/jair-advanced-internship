@@ -35,7 +35,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
     const { isSubscribed, favoriteMovies, isLoading, requireLogin } = useAuth()
     const dispatch = useDispatch()
     const audioRef = useRef<HTMLAudioElement>(null)
-    const [duration, setDuration] = useState<string>('N/A')
+    const [duration, setDuration] = useState<string>('')
 
     function handleLoadedMetadata() {
         const audio = audioRef.current
