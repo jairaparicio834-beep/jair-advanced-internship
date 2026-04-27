@@ -52,7 +52,7 @@ const MovieCard = ({ id, director, title, subscriptionRequired, imageLink, audio
                                 duration &&
                                 <div className='flex space-x-1'>
                                     <ClockIcon className='w-3' />
-                                    <span>{duration || '...'}</span>
+                                    <span>{duration || ''}</span>
                                 </div>
                             }
                         </div>
