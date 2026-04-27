@@ -2,7 +2,7 @@
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Movie } from '@/types/movie';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -30,7 +30,7 @@ const MovieCard = ({ id, director, title, subscriptionRequired, imageLink, audio
                 preload="metadata"
             />
             <div className='w-full pt-2.5 relative'>
-                {(subscriptionRequired && subscriptionStatus == 'Basic') && (
+                {(showPremiumBadge) && (
                     <div className='absolute top-0 z-50 left-1/2 -translate-x-1/2 bg-opacity-80 bg-[#5b1994] transition hover:bg-opacity-100 text-white text-[10px] font-bold px-2 py-1 rounded-full'>
                         Premium
                     </div>
