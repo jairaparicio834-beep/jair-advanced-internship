@@ -46,10 +46,7 @@ const LogInModal = ({ setModal }: LogInModalProps) => {
             }
             dispatch(signInUser({ email: user.email ?? '', password }))
             dispatch(changeSubscriptionStatus('Basic'))
-        }
-        if (isOpen) {
             router.push('/dashboard')
-            dispatch(closeModal())
         }
 
         setLoadingGoogle(false)
