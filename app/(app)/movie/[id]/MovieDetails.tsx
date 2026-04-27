@@ -84,7 +84,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
                             </div>
                             <div className='flex items-center w-1/2 font-normal text-[14px] gap-1.5'>
                                 <ClockIcon className='w-4 h-4' />
-                                <span>{duration || '...'}</span>
+                                <span>{duration}</span>
                             </div>
                             <div className='flex items-center w-1/2 font-normal text-[14px] gap-1.5'>
                                 <MicrophoneIcon className='w-4 h-4' />
