@@ -66,7 +66,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
         <>
             <audio
                 ref={audioRef}
-                src={`https://advanced-internship-api-production.up.railway.app/${movie.audioLink}`}
+                src={`https://advanced-internship-api-production.up.railway.app/${movie?.audioLink}`}
                 onLoadedMetadata={handleLoadedMetadata}
                 onError={(e) => console.log('Audio error:', e)}
                 preload="metadata"
