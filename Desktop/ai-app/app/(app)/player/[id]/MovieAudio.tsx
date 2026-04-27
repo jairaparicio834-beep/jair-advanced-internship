@@ -2,7 +2,7 @@
 import { BackwardIcon, ForwardIcon, PlayIcon } from '@heroicons/react/24/outline';
 import { PauseIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 interface MovieAudioProps {
     movie: {
         id: string;
@@ -51,6 +51,15 @@ const MovieAudio = ({ movie }: MovieAudioProps) => {
         }
         setCurrentTime(newTime);
     }
+    useEffect(() => {
+        const audio = audioRef.current
+        if (audio) {
+            audio.load()
+            audio.addEventListener('loadedmetadata', () => {
+                setDuration(audio.duration)
+            })
+        }
+    }, [])
 
     return (
         <>
@@ -60,10 +69,9 @@ const MovieAudio = ({ movie }: MovieAudioProps) => {
                     if (!isSeeking) setCurrentTime(audioRef.current?.currentTime || 0)
                 }}
                 onLoadedMetadata={() => setDuration(audioRef.current?.duration || 0)}
-                onCanPlay={() => {
-                    if (!duration) setDuration(audioRef.current?.duration || 0)
-                }}
-            ></audio >
+                onCanPlay={() => setDuration(audioRef.current?.duration || 0)}
+                onCanPlayThrough={() => setDuration(audioRef.current?.duration || 0)}
+            />
             <div className='flex gap-3 w-[calc(100/3)]'>
                 <div className='flex max-h-[48px] h-[48px] min-h-[48px] w-auto'>
                     <Image className='w-full h-full' src={movie?.imageLink} width={200} height={300} alt={movie?.title} />
