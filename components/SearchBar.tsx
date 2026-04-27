@@ -1,5 +1,5 @@
 'use client'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
+import { ClockIcon, MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react';
 import SearchCardSkeleton from './skeletons/SearchCardSkeleton';
@@ -113,7 +113,10 @@ function MovieSearchCard({ imageLink, id, title, director, audioLink, onClose }:
                 <div className='flex flex-col space-y-1'>
                     <span className='text-[16px] font-medium'>{title}</span>
                     <span className='text-[14px] font-extralight text-[#6b757b]'>{director}</span>
-                    <span className='text-[14px] font-extralight text-[#6b757b]'>{duration || '...'}</span>
+                    <div className='flex gap-1'>
+                        <ClockIcon className='w-3' />
+                        <span className='text-[14px] font-extralight text-[#6b757b]'>{duration || '...'}</span>
+                    </div>
                 </div>
             </Link>
         </>
