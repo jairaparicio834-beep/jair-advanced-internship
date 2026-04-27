@@ -5,7 +5,7 @@ const SearchCardSkeleton = () => {
             <div className='flex flex-col space-y-2 w-full'>
                 <div className='h-[16px] w-2/3 bg-gray-200 animate-pulse rounded' />
                 <div className='h-[14px] w-1/3 bg-gray-200 animate-pulse rounded' />
-                <div className='h-[14px] w-1/6 bg-gray-200 animate-pulse rounded' />
+                <div className='h-[14px] w-1/5 bg-gray-200 animate-pulse rounded' />
             </div>
         </div>
     )

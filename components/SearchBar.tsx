@@ -114,7 +114,7 @@ function MovieSearchCard({ imageLink, id, title, director, audioLink, onClose }:
                     <span className='text-[16px] font-medium'>{title}</span>
                     <span className='text-[14px] font-extralight text-[#6b757b]'>{director}</span>
                     <div className='flex gap-1'>
-                        <ClockIcon className='w-3 text-[16px]' />
+                        <ClockIcon className='w-2 text-[16px]' />
                         <span className='text-[14px] font-extralight text-[#6b757b]'>{duration || '...'}</span>
                     </div>
                 </div>
