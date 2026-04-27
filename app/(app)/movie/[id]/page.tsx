@@ -9,12 +9,12 @@ const fetchMovie = async (id: string) => {
     return data.data
 }
 interface PageProps {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 const Page = async ({ params }: PageProps) => {
-    const { id } = params
+    const { id } = await params
     const movie = await fetchMovie(id)
 
 
