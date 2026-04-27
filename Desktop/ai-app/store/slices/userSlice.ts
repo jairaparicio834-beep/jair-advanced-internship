@@ -43,10 +43,13 @@ const userSlice = createSlice({
         state.email = action.payload.email
         state.password = action.payload.password
     },
-    signOutUser:  (state) => {
-        state.email = ''
-        state.password = ''
-    },
+    signOutUser: (state) => {
+    state.email = ''
+    state.password = ''
+    state.subscriptionStatus = 'Basic'
+    state.isSubscribed = false
+    state.favoriteMovies = []
+},
     addToFavorites: (state, action: PayloadAction<Movie>) => {
       state.favoriteMovies.push(action.payload)
     }, 
