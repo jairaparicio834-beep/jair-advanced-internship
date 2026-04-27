@@ -120,7 +120,7 @@ const MovieDetails = ({ movie }: MovieDetailsProps) => {
                         }
 
                     </div>
-                    <p className=''>{movie.movieDescription}</p>
+                    <p>{movie.movieDescription}</p>
                 </div>
                 <div className='overflow-hidden mb-5 mx-auto w-[200px] min-w-[200px] xl:ml-8 rounded-xl aspect-[2/3]'>
                     <Image className='w-full h-full' src={movie?.imageLink} width={200} height={300} alt={movie?.title} />
