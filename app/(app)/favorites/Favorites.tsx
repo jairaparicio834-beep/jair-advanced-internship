@@ -23,7 +23,7 @@ const Favorites = () => {
                         >Login</button>
                     </div>
                     :
-                    (favoriteMovies.length > 0 && isSubscribed) ?
+                    (favoriteMovies.length > 0) ?
                         favoriteMovies.map(movie => (
                             <div className='max-w-[170px] w-full'>
                                 <MovieCard {...movie} />
