@@ -2,7 +2,7 @@
 import { ClockIcon, StarIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Movie } from '@/types/movie';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -48,13 +48,11 @@ const MovieCard = ({ id, director, title, subscriptionRequired, imageLink, audio
                                 <StarIcon className='w-3' />
                                 <span>{rating}</span>
                             </div>
-                            {
-                                duration &&
-                                <div className='flex space-x-1'>
-                                    <ClockIcon className='w-3' />
-                                    <span>{duration || ''}</span>
-                                </div>
-                            }
+                            <div className='flex space-x-1'>
+                                <ClockIcon className='w-3' />
+                                <span>{duration}</span>
+                            </div>
+
                         </div>
                     </div>
                 </Link>
