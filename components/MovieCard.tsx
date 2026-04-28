@@ -9,7 +9,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 const MovieCard = ({ id, director, title, subscriptionRequired, imageLink, audioLink, rating }: Movie) => {
     const { isLoggedIn, subscriptionStatus } = useAuth()
-    const showPremiumBadge = !isLoggedIn || (subscriptionStatus === 'Basic' && subscriptionRequired)
+    const showPremiumBadge = subscriptionRequired && (!isLoggedIn || subscriptionStatus === 'Basic')
     const audioRef = useRef<HTMLAudioElement>(null)
     const [duration, setDuration] = useState<string>('')
     function handleLoadedMetadata() {
